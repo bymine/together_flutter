@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "478817628190",
+    "project_id": "together-flutter",
+    "storage_bucket": "together-flutter.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:478817628190:android:64ce839872d3de32aefe0f",
+        "android_client_info": {
+          "package_name": "com.bymine.together_flutter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "478817628190-q72s01hcjedsjoclqohsggic96erk973.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLSiEIUNcmj0kUSWtDgfZOgjQWNd6VMXY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "478817628190-q72s01hcjedsjoclqohsggic96erk973.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
