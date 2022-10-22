@@ -302,7 +302,8 @@ class SignUpPage extends GetView<SignUpController> {
             Obx(
               () => ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                    primary: controller.activeSignUp ? background : Colors.grey,
+                    backgroundColor:
+                        controller.activeSignUp ? background : Colors.grey,
                     minimumSize: const Size(double.maxFinite, kButtonHeight),
                     shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.zero)),

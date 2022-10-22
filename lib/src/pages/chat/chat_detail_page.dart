@@ -60,39 +60,36 @@ class ChatDetailPage extends GetView<ChatDetailController> {
                 )),
           ),
         ));
-    double pageSize = MediaQuery.of(context).size.height;
-    double notifySize = MediaQuery.of(context).padding.top;
-    double appBarSize = appBar.preferredSize.height;
     return Scaffold(
       appBar: appBar,
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            SizedBox(
-              height: pageSize - (notifySize + appBarSize + 60),
-              child: Obx(() {
-                if (controller.firebaseCode.value == FirebaseCode.success) {
-                  return ListView.builder(
-                      controller: controller.scrollController,
-                      reverse: false,
-                      shrinkWrap: true,
-                      itemCount: controller.loadMessage.length,
-                      itemBuilder: (context, index) {
-                        return MessageCard(
-                          index: index,
-                        );
-                      });
-                } else {
-                  return Container();
-                }
-              }),
-            ),
-            Container(
+      body: Column(
+        children: [
+          Expanded(
+            child: Obx(() {
+              if (controller.firebaseCode.value == FirebaseCode.success) {
+                return ListView.builder(
+                    controller: controller.scrollController,
+                    reverse: true,
+                    shrinkWrap: true,
+                    itemCount: controller.loadMessage.length,
+                    itemBuilder: (context, index) {
+                      return MessageCard(
+                        index: index,
+                      );
+                    });
+              } else {
+                return Container();
+              }
+            }),
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
               height: kButtonHeight,
-              padding: const EdgeInsets.only(left: 20, right: 20, bottom: 10),
+              margin: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
               child: TextField(
-                textAlignVertical: TextAlignVertical.center,
                 controller: controller.message,
+                maxLines: null,
                 decoration: InputDecoration(
                     filled: true,
                     fillColor: const Color(0xffF0EDFF),
@@ -109,9 +106,9 @@ class ChatDetailPage extends GetView<ChatDetailController> {
                         },
                         icon: LineIcon(LineIcons.paperPlane))),
               ),
-            )
-          ],
-        ),
+            ),
+          )
+        ],
       ),
     );
   }

@@ -19,7 +19,6 @@ class ChatController extends GetxController {
   @override
   void onInit() {
     projects(HomeController.to.projects);
-
     HomeController.to.projects.listen((p0) {
       projects(HomeController.to.projects);
     });

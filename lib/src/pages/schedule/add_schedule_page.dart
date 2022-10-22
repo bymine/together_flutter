@@ -162,7 +162,7 @@ class AddSchedulePage extends GetView<AddScheduleController> {
               ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                    primary: background,
+                    backgroundColor: background,
                     minimumSize: const Size(double.maxFinite, kButtonHeight),
                     shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.zero)),

@@ -14,14 +14,15 @@ class ChatDetailController extends GetxController {
   RxList<Message> loadMessage = RxList([]);
   late Rx<Project> project;
   RxList<ChatProfile> chatUsers = RxList([]);
-  RxMap<String, dynamic> userThumbnail = <String, dynamic>{}.obs;
   ScrollController scrollController = ScrollController();
   Rx<FirebaseCode> firebaseCode = FirebaseCode.init.obs;
   @override
   void onInit() {
     project = ChatController.to.currentRoom;
-    ChatController.to.currentRoom.listen((p0) {
-      project = ChatController.to.currentRoom;
+
+    ChatController.to.projects.listen((p0) {
+      project(p0[ChatController.to.currentRoomIdx.value]);
+      getMemberThumbNail();
     });
 
     super.onInit();
@@ -31,6 +32,13 @@ class ChatDetailController extends GetxController {
 
     getMemberThumbNail();
     readMessageAll();
+
+    ever(loadMessage, (List<Message> value) {
+      if (scrollController.hasClients) {
+        scrollController.animateTo(scrollController.position.minScrollExtent,
+            duration: const Duration(milliseconds: 300), curve: Curves.easeOut);
+      }
+    });
   }
 
   @override
@@ -60,13 +68,9 @@ class ChatDetailController extends GetxController {
   }
 
   activeChat() async {
-    project = Get.arguments;
-
-    var projectIdx = Get.arguments as Rx<Project>;
-
     var data = await firestore
         .collection(projectCollection)
-        .doc(projectIdx.value.id)
+        .doc(project.value.id)
         .get();
 
     List<Map<String, dynamic>> map =
@@ -75,9 +79,9 @@ class ChatDetailController extends GetxController {
     map.firstWhere(
         (element) => element['user'] == AuthController.to.uid)['active'] = true;
 
-    firestore
+    await firestore
         .collection(projectCollection)
-        .doc(projectIdx.value.id)
+        .doc(project.value.id)
         .update({'user': map});
   }
 
@@ -106,7 +110,7 @@ class ChatDetailController extends GetxController {
         .collection(projectCollection)
         .doc(project.value.id)
         .collection(chatCollection)
-        .orderBy("message_date", descending: false)
+        .orderBy("message_date", descending: true)
         .snapshots()
         .listen((event) {
       loadMessage(event.docs.map((e) => Message.fromJson(e)).toList());
@@ -165,8 +169,9 @@ class ChatDetailController extends GetxController {
           .collection(chatCollection)
           .add(sendMessage.toMap());
 
-      FocusNode().dispose();
       message.clear();
     }
+    // scrollController.animateTo(scrollController.position.maxScrollExtent,
+    //     duration: Duration(milliseconds: 300), curve: Curves.easeOut);
   }
 }

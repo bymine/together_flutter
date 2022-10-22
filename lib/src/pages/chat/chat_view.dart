@@ -37,12 +37,7 @@ class ChatView extends GetView<ChatController> {
                       height: kSmallSpace,
                     ),
                     InkWell(
-                      onTap: () {
-                        // Get.putAsync(SearchProjectController())
-                        //     .then((value) => null);
-                        // Get.put(SearchProjectController());
-                        // controller.loadProjects();
-                      },
+                      onTap: () {},
                       customBorder: const CircleBorder(),
                       splashColor: Colors.red,
                       child: Container(

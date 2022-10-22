@@ -87,7 +87,7 @@ class ShowProjectPage extends GetView<ShowProjectController> {
             ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                  primary: background,
+                  backgroundColor: background,
                   minimumSize: const Size(double.maxFinite, kButtonHeight),
                   shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.zero)),
