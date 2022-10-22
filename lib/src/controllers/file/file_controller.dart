@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:gallery_saver/gallery_saver.dart';
 import 'package:get/get.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:path_provider/path_provider.dart';
@@ -56,12 +57,14 @@ class FileController extends GetxController {
 
   downloadFile(ProjectFile file) async {
     var dio = Dio();
-
-    var dir = await getTemporaryDirectory();
-    await dio.download(file.downloadUrl, '${dir.path}/${file.title}',
-        onReceiveProgress: (rec, total) {
-      // print('Rec: $rec, Total: $total');
-    });
+    var tempDir = await getTemporaryDirectory();
+    var path = '${tempDir.path}/${file.title}';
+    await dio.download(file.downloadUrl, path);
+    if (file.fileType == UploadType.media) {
+      await GallerySaver.saveVideo(file.downloadUrl, toDcim: true);
+    } else if (file.fileType == UploadType.photo) {
+      await GallerySaver.saveImage(file.downloadUrl, toDcim: true);
+    }
   }
 
   deleteFile(ProjectFile file) async {
